@@ -1,0 +1,79 @@
+/* pages/add/add.wxss */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx 80rpx;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.avatar-wrapper {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 30rpx;
+  background-color: #eee;
+  border: 2rpx dashed #ccc;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.form-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+  font-size: 28rpx;
+}
+
+.form-item label {
+  width: 80rpx;
+  color: #333;
+  font-weight: 500;
+  padding-right: 20rpx;
+}
+
+.form-item input {
+  flex: 1;
+  height: 60rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 16rpx;
+  padding: 0 20rpx;
+  font-size: 28rpx;
+  background-color: white;
+}
+
+.form-item picker {
+  flex: 1;
+  height: 60rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 16rpx;
+  padding: 0 0rpx;
+  text-align: center;
+  background-color: #06456e;
+  max-width: 120rpx;
+  padding-top: 20rpx;
+  color: rgb(255, 255, 255);
+}
+
+.save-btn {
+  width: 100%;
+  height: 80rpx;
+  background-color: #06456e;
+  color: white;
+  font-size: 32rpx;
+  line-height: 50rpx;
+  border-radius: 16rpx;
+  margin-top: 20rpx;
+  padding-bottom:40rpx;
+
+  border: none;
+}

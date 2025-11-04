@@ -1,0 +1,37 @@
+<view class="container">
+  <!-- 搜索框 -->
+  <view class="search-box">
+    <input placeholder="搜索姓名或电话" bindinput="onSearch" />
+  </view>
+
+  <!-- 分组筛选 -->
+  <view class="group-filter">
+    <button wx:for="{{groups}}" wx:key="item" class="{{item === currentGroup ? 'active' : ''}}" bindtap="filterByGroup" data-group="{{item}}">
+      {{item}}
+    </button>
+  </view>
+
+  <!-- 联系人列表 -->
+  <view class="contact-list">
+    <view wx:for="{{filteredContacts}}" wx:key="_id" class="contact-item" bindtap="editContact" data-id="{{item._id}}">
+      <image src="{{item.avatarUrl || '/images/default-avatar.png'}}" class="avatar" mode="aspectFill" />
+      <view class="info">
+        <text class="name">{{item.name}}</text>
+        <text class="phone">{{item.phone}}</text>
+        <text class="group">{{item.group}}</text>
+      </view>
+      <button class="delete-btn" size="mini" catchtap="deleteContact" data-id="{{item._id}}">删除</button>
+    </view>
+
+    <view wx:if="{{filteredContacts.length === 0}}" class="empty">暂无联系人</view>
+  </view>
+
+<!-- 刷新按钮 -->
+<view class="refresh-btn" bindtap="loadContacts">
+  <text class="refresh-icon">⟳</text>
+  <text>刷新</text>
+</view>
+
+  <!-- 添加按钮 -->
+  <view class="fab" bindtap="goToAdd">+</view>
+</view>

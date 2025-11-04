@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "Teyvat通讯录",
+  "usingComponents": {
+    "cloud-tip-modal": "/components/cloudTipModal/index"
+  }
+}

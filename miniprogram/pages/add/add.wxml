@@ -1,0 +1,36 @@
+<!-- pages/add/add.wxml -->
+<view class="container">
+  <!-- 头像区域 -->
+  <view class="avatar-wrapper" bindtap="chooseAvatar">
+    <image src="{{avatar}}" mode="aspectFill" class="avatar"></image>
+  </view>
+
+  <!--姓名-->
+  <view class="form-item">
+    <label>姓名</label>
+    <input value="{{name}}" bindinput="onNameInput" placeholder="请输入姓名" />
+  </view>
+
+  <!-- 电话输入-->
+  <view class="form-item">
+    <label>电话</label>
+    <input value="{{phone}}" bindinput="onPhoneInput" placeholder="请输入电话" type="phone" />
+  </view>
+
+  <!--分组选择 -->
+  <view class="form-item">
+    <label>分组</label>
+    <picker mode="selector" range="{{['家人', '同事', '朋友', '其他']}}" 
+            value="{{group}}" bindchange="onGroupChange">
+      <view class="picker">{{group}}</view>
+    </picker>
+  </view>
+
+  <!-- 保存按钮 -->
+  <button class="save-btn" bindtap="saveContact" disabled="{{isSaving}}">
+    {{isSaving ? '保存中...' : (mode === 'edit' ? '更新' : '添加')}}
+  </button>
+</view>
+
+<!-- 隐藏 canvas -->
+<canvas canvas-id="avatarCanvas" style="width:100px;height:100px;position:fixed;left:-9999px;"></canvas>
