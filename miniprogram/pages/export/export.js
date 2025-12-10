@@ -1,10 +1,16 @@
 // pages/export/export.js
+const app = getApp();
+
 Page({
   data: {
     isExporting: false,
+    isImporting: false,
+    selectedFile: null,
+    importResult: null,
     downloadUrl: ''
   },
 
+  // ========== 导出功能 ==========
   async handleExport() {
     this.setData({ isExporting: true, downloadUrl: '' });
 
@@ -35,12 +41,10 @@ Page({
     wx.showLoading({ title: '下载中...' });
 
     try {
-      // 下载到临时路径
       const downloadTask = wx.downloadFile({
         url: downloadUrl,
         success: (res) => {
           if (res.statusCode === 200) {
-            // 打开 Excel 文件（需用户确认）
             wx.openDocument({
               filePath: res.tempFilePath,
               fileType: 'xlsx',
@@ -71,9 +75,87 @@ Page({
     }
   },
 
+  // ========== 导入功能 ==========
+  onChooseFile() {
+    if (!wx.canIUse('chooseMessageFile')) {
+      wx.showModal({
+        title: '提示',
+        content: '当前微信版本过低，无法选择文件，请升级微信至最新版。',
+        showCancel: false
+      });
+      return;
+    }
+  
+    wx.chooseMessageFile({
+      count: 1,
+      type: 'file',
+      extension: ['.xlsx'],
+      success: (res) => {
+        const file = res.tempFiles[0];
+        if (!file || !file.name.toLowerCase().endsWith('.xlsx')) {
+          wx.showToast({ title: '请选择 .xlsx 格式的 Excel 文件', icon: 'none' });
+          return;
+        }
+        this.setData({ selectedFile: file });
+      },
+      fail: () => {
+        // 用户取消
+      }
+    });
+  },
+  
+  clearFile() {
+    this.setData({ selectedFile: null, importResult: null });
+  },
+
+  async handleImport() {
+    const { selectedFile } = this.data;
+    if (!selectedFile) {
+      wx.showToast({ title: '请选择文件', icon: 'none' });
+      return;
+    }
+
+    this.setData({ isImporting: true, importResult: null });
+
+    try {
+      // 上传文件到云存储
+      const uploadRes = await wx.cloud.uploadFile({
+        cloudPath: `imports/${Date.now()}_${selectedFile.name}`,
+        filePath: selectedFile.path
+      });
+
+      // 调用导入云函数
+      const res = await wx.cloud.callFunction({
+        name: 'importContacts',
+        data: {
+          fileID: uploadRes.fileID
+        }
+      });
+
+      if (res.result.success) {
+        this.setData({
+          importResult: res.result,
+          selectedFile: null
+        });
+        wx.showToast({ title: '导入成功', icon: 'success' });
+      } else {
+        this.setData({ importResult: res.result });
+        wx.showToast({ title: '导入失败', icon: 'error' });
+      }
+    } catch (err) {
+      console.error('[导入错误]', err);
+      this.setData({
+        importResult: { success: false, error: '网络错误，请重试' }
+      });
+      wx.showToast({ title: '操作失败', icon: 'error' });
+    } finally {
+      this.setData({ isImporting: false });
+    }
+  },
+
   onShareAppMessage() {
     return {
-      title: '我的联系人导出',
+      title: '联系人导入/导出',
       path: '/pages/export/export'
     };
   }

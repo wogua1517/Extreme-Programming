@@ -1,22 +1,59 @@
 <!-- pages/export/export.wxml -->
 <view class="container">
-  <view class="title">导出联系人</view>
-  
-  <view class="desc">将所有联系人导出为 Excel 表格，包含多电话、多邮箱等信息。</view>
-
-  <button 
-    class="export-btn" 
-    bindtap="handleExport" 
-    loading="{{isExporting}}"
-    disabled="{{isExporting}}"
-  >
-    {{ isExporting ? '导出中...' : '导出到 Excel' }}
-  </button>
-
-  <view wx:if="{{downloadUrl}}" class="success-tip">
-    ✅ 导出成功！点击下方按钮下载文件。
-    <button class="download-btn" open-type="navigateToMiniProgram" app-id="wxb38a5a8d3c6e5f4a" bindtap="downloadFile">
-      下载 Excel 文件
+  <!-- 导出区域 -->
+  <view class="section">
+    <text class="section-title">导出联系人</text>
+    <text class="desc">将所有联系人导出为 Excel 表格</text>
+    
+    <button 
+      class="btn primary" 
+      bindtap="handleExport" 
+      loading="{{isExporting}}"
+      disabled="{{isExporting}}"
+    >
+      {{ isExporting ? '导出中...' : '导出到 Excel' }}
     </button>
+
+    <view wx:if="{{downloadUrl}}" class="success-tip">
+      ✅ 导出成功！
+      <button class="btn download" bindtap="downloadFile">立即下载</button>
+    </view>
+  </view>
+
+  <!-- 导入区域 -->
+  <view class="section">
+    <text class="section-title">导入联系人</text>
+    <text class="desc">上传 .xlsx 文件，表头必须包含：姓名、电话、邮箱、地址、分组、收藏</text>
+    
+    <view class="upload-area">
+      <button class="btn choose" bindtap="onChooseFile">
+        选择 Excel 文件
+      </button>
+
+      <view wx:if="{{selectedFile}}" class="file-info">
+        <text>{{ selectedFile.name }}</text>
+        <button class="remove-btn" bindtap="clearFile">删除</button>
+      </view>
+    </view>
+
+    <button 
+      class="btn secondary" 
+      bindtap="handleImport" 
+      disabled="{{!selectedFile}}"
+      loading="{{isImporting}}"
+    >
+      {{ isImporting ? '导入中...' : '开始导入' }}
+    </button>
+
+    <!-- 成功提示 -->
+    <view wx:if="{{importResult && importResult.success}}" class="result success">
+      ✅ 导入成功！共新增 <text class="highlight">{{importResult.importedCount}}</text> 条联系人。
+      <text wx:if="{{importResult.failedCount > 0}}">（{{importResult.failedCount}} 条失败）</text>
+    </view>
+
+    <!-- 错误提示 -->
+    <view wx:if="{{importResult && !importResult.success}}" class="result error">
+      ❌ 导入失败：{{importResult.error}}
+    </view>
   </view>
 </view>
