@@ -1,0 +1,40 @@
+/* pages/export/export.wxss */
+.container {
+  padding: 60rpx;
+  min-height: 100vh;
+  background: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.desc {
+  color: #666;
+  text-align: center;
+  margin-bottom: 60rpx;
+  line-height: 1.6;
+}
+
+.export-btn, .download-btn {
+  width: 80%;
+  height: 80rpx;
+  font-size: 32rpx;
+  background: #06456e;
+  color: white;
+  border-radius: 16rpx;
+  margin-bottom: 30rpx;
+}
+
+.success-tip {
+  margin-top: 40rpx;
+  color: #09bb07;
+  font-size: 28rpx;
+  text-align: center;
+}

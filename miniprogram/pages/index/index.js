@@ -154,6 +154,10 @@ Page({
     wx.navigateTo({ url: '/pages/add/add' });
   },
 
+  goToExport() {
+    wx.navigateTo({ url: '/pages/export/export' });
+  },
+
   editContact(e) {
     const id = e.currentTarget.dataset.id;
     wx.navigateTo({ url: `/pages/add/add?id=${id}` });

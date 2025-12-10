@@ -1,0 +1,22 @@
+<!-- pages/export/export.wxml -->
+<view class="container">
+  <view class="title">导出联系人</view>
+  
+  <view class="desc">将所有联系人导出为 Excel 表格，包含多电话、多邮箱等信息。</view>
+
+  <button 
+    class="export-btn" 
+    bindtap="handleExport" 
+    loading="{{isExporting}}"
+    disabled="{{isExporting}}"
+  >
+    {{ isExporting ? '导出中...' : '导出到 Excel' }}
+  </button>
+
+  <view wx:if="{{downloadUrl}}" class="success-tip">
+    ✅ 导出成功！点击下方按钮下载文件。
+    <button class="download-btn" open-type="navigateToMiniProgram" app-id="wxb38a5a8d3c6e5f4a" bindtap="downloadFile">
+      下载 Excel 文件
+    </button>
+  </view>
+</view>

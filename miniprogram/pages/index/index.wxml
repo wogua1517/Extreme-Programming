@@ -65,3 +65,6 @@
   <!-- 添加按钮 -->
   <view class="fab" bindtap="goToAdd">+</view>
 </view>
+
+<!-- 导出按钮 -->
+<view class="export-btn" bindtap="goToExport">导入/导出</view>
