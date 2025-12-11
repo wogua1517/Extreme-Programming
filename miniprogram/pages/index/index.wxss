@@ -146,8 +146,8 @@
 
 .export-btn {
   position: fixed;
-  bottom: 200rpx;
-  right: 40rpx;
+  bottom: 80rpx;
+  right: 30rpx;
   width: 90rpx;
   height: 90rpx;
   background: #4caf50;
@@ -161,4 +161,21 @@
   box-shadow: 0 2rpx 6rpx rgba(0,0,0,0.15);
   z-index: 999;
   line-height: 1.2;
+}
+
+.fab {
+  position: fixed;
+  right: 30rpx;          /* 距离右侧距离 */
+  bottom: 200rpx;         /* 距离底部距离 */
+  width: 100rpx;         /* 圆形按钮直径 */
+  height: 100rpx;
+  border-radius: 50%;    /* 圆形 */
+  background-color: #07c160; /* 微信绿，可自定义 */
+  color: white;
+  font-size: 50rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.15); /* 可选：添加阴影 */
+  z-index: 999;          /* 确保在最上层 */
 }
